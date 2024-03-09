@@ -3,14 +3,15 @@ class Student:
         self.Name = Name
         self.ID = ID
         self.Gender = Gender
-        self.marks = []
+        self.marks = {}
     
     def addMarks(self, course, course_marks):
-        self.marks.append(course_marks)
+        self.marks[course] = course_marks
     
     def calcGPA(self):
         total_sub = len(self.marks)
-        for i in self.marks:
+        total_marks = 0;
+        for i in self.marks.values():
             total_marks += i
         GPA = total_marks / total_sub
         return GPA
@@ -20,16 +21,25 @@ class Course:
         self.course = course
         self.students = []
     
-    def addStudent(self, name):
-        self.students.append(name)
+    def addStudent(self, student):
+        self.students.append(student)
     
-    def removeStudent(self, name):
-        if name in self.students:
-            self.students.remove(name)
+    def removeStudent(self, student):
+        if student in self.students:
+            self.students.remove(student)
     
     def calcAvgGPA(self):
         total_GPA = 0
         for student in self.students:
             total_GPA += student.calcGPA()
-        AvgGPA = total_GPA / len(self.students)
-        return AvgGPA
+        avgGPA = total_GPA / len(self.students)
+        return avgGPA
+
+
+student1 = Student("A", 123, "F")
+
+student1.addMarks("CS", 85)
+student1.addMarks("Math", 90)
+
+student_gpa = student1.calcGPA()
+print("Student GPA:", student_gpa)
